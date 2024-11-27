@@ -1,12 +1,12 @@
 {
-    "name": "risetechapps/code-generate",
+    "name": "risetechapps/code-generate-for-laravel",
     "description": "",
     "keywords": [
         "risetechapps",
         "Rise Tech",
         "code-generate"
     ],
-    "homepage": "https://github.com/risetechapps/code-generate",
+    "homepage": "https://github.com/risetechapps/code-generate-for-laravel",
     "license": "MIT",
     "type": "library",
     "authors": [
