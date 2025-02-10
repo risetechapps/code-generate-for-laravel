@@ -19,7 +19,7 @@ Antes de instalar, certifique-se de que seu projeto atenda aos seguintes requisi
 ### 2️⃣ Instalação do Package
 Execute o seguinte comando no terminal:
 ```bash
- composer require risetechapps/code-generate-for-laravel
+ composer require risetechapps/code-generate
 ```
 ---
 
