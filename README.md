@@ -1,52 +1,42 @@
-# Very short description of the package
+# Laravel Code Generate
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/risetech/codegenerate.svg?style=flat-square)](https://packagist.org/packages/risetech/codegenerate)
-[![Total Downloads](https://img.shields.io/packagist/dt/risetech/codegenerate.svg?style=flat-square)](https://packagist.org/packages/risetech/codegenerate)
-![GitHub Actions](https://github.com/risetech/codegenerate/actions/workflows/main.yml/badge.svg)
+## 📌 Sobre o Projeto
+O **Laravel Code Generate** é um package para Laravel que gera automaticamente código sequencial nos registros.
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+## ✨ Funcionalidades
+- 🔑 **Código Automático** consegue gerar um código de 4 à 6 digitos em cada registro mantendo a sequencia.
 
-## Installation
+---
 
-You can install the package via composer:
+## 🚀 Instalação
 
+### 1️⃣ Requisitos
+Antes de instalar, certifique-se de que seu projeto atenda aos seguintes requisitos:
+- PHP >= 8.0
+- Laravel >= 10
+- Composer instalado
+
+### 2️⃣ Instalação do Package
+Execute o seguinte comando no terminal:
 ```bash
-composer require risetech/codegenerate
+ composer require risetechapps/code-generate-for-laravel
 ```
+---
 
-## Usage
 
-```php
-// Usage description here
-```
+## 🛠 Contribuição
+Sinta-se à vontade para contribuir! Basta seguir estes passos:
+1. Faça um fork do repositório
+2. Crie uma branch (`feature/nova-funcionalidade`)
+3. Faça um commit das suas alterações
+4. Envie um Pull Request
 
-### Testing
+---
 
-```bash
-composer test
-```
+## 📜 Licença
+Este projeto é distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-### Changelog
+---
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+💡 **Desenvolvido por [Rise Tech](https://risetech.com.br)**
 
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-### Security
-
-If you discover any security related issues, please email apps@risetech.combr instead of using the issue tracker.
-
-## Credits
-
--   [Rise Tech](https://github.com/risetech)
--   [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
