@@ -24,6 +24,10 @@ class CodeGenerateServiceProvider extends ServiceProvider
             return new CodeGenerate;
         });
 
+        $this->app->singleton(CodeGenerate::class, function () {
+            return new CodeGenerate;
+        });
+
         $this->app->singleton(CodeGenerate::class);
     }
 }
