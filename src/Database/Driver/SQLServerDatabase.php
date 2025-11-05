@@ -9,16 +9,21 @@ use RiseTechApps\CodeGenerate\Contracts\Driver\DatabaseDriverInterface;
 
 class SQLServerDatabase implements DatabaseDriverInterface
 {
+    public function __construct(private readonly ?string $connection = null)
+    {
+    }
+
     /**
      * @throws Exception
      */
     public function getFieldType(string $table): array
     {
-        $database = DB::connection()->getDatabaseName();
+        $connection = DB::connection($this->connection);
+        $database = $connection->getDatabaseName();
         $sql = 'SELECT column_name AS "column_name", data_type AS "data_type", character_maximum_length AS "column_length" FROM information_schema.columns ';
         $sql .= 'WHERE table_catalog = :database AND table_name = :table';
 
-        $rows = DB::select($sql, ['database' => $database, 'table' => $table]);
+        $rows = $connection->select($sql, ['database' => $database, 'table' => $table]);
 
         $fieldType = null;
         $fieldLength = 20;

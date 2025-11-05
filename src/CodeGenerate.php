@@ -18,18 +18,21 @@ class CodeGenerate
      */
     public static function generate($class): string
     {
-        $table = '';
-
         if ($class instanceof Model) {
-            $table = $class->getTable();
+            $model = $class;
+        } elseif (is_string($class)) {
+            $model = new $class();
+            if (!$model instanceof Model) {
+                throw new Exception('Provided class must extend ' . Model::class);
+            }
+        } else {
+            throw new Exception('CodeGenerate::generate expects an Eloquent model instance or class name');
         }
 
-        if (gettype($class) === "string") {
-            $class = new $class();
-            $table = $class->getTable();
-        }
+        $table = $model->getTable();
+        $connectionName = $model->getConnectionName();
 
-        $driver = DatabaseDriverFactory::make();
+        $driver = DatabaseDriverFactory::make($connectionName);
         $fieldInfo = $driver->getFieldType($table);
         $tableFieldType = $fieldInfo['type'];
         $tableFieldLength = $fieldInfo['length'];
@@ -45,19 +48,22 @@ class CodeGenerate
         $prefixLength = strlen(self::prefix);
         $idLength = self::length - $prefixLength;
 
-        $totalQuery = sprintf("SELECT count(%s) total FROM %s", self::field, $table);
-        $total = DB::connection($class->getConnectionName())->select(trim($totalQuery));
+        return DB::connection($connectionName)->transaction(function () use ($table, $prefixLength, $idLength, $connectionName) {
+            $latest = DB::connection($connectionName)
+                ->table($table)
+                ->select(self::field)
+                ->orderBy(self::field, 'desc')
+                ->lockForUpdate()
+                ->first();
 
-        if ($total[0]->total) {
-            $maxQuery = sprintf("SELECT MAX(%s) AS maxid FROM %s", self::field, $table);
-            $queryResult = DB::connection($class->getConnectionName())->select($maxQuery);
+            if ($latest !== null && isset($latest->{self::field})) {
+                $maxFullId = (string)$latest->{self::field};
+                $maxId = substr($maxFullId, $prefixLength, $idLength);
 
-            $maxFullId = $queryResult[0]->maxid;
-            $maxId = substr($maxFullId, $prefixLength, $idLength);
+                return self::prefix . str_pad((int)$maxId + 1, $idLength, '0', STR_PAD_LEFT);
+            }
 
-            return self::prefix . str_pad((int)$maxId + 1, $idLength, '0', STR_PAD_LEFT);
-        } else {
             return self::prefix . str_pad(1, $idLength, '0', STR_PAD_LEFT);
-        }
+        });
     }
 }

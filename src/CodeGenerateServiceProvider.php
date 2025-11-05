@@ -19,15 +19,10 @@ class CodeGenerateServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Register the main class to use with the facade
-        $this->app->singleton('code-generate', function () {
-            return new CodeGenerate;
-        });
-
         $this->app->singleton(CodeGenerate::class, function () {
-            return new CodeGenerate;
+            return new CodeGenerate();
         });
 
-        $this->app->singleton(CodeGenerate::class);
+        $this->app->alias(CodeGenerate::class, 'code-generate');
     }
 }

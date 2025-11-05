@@ -11,15 +11,14 @@ class DatabaseDriverFactory
     /**
      * @throws Exception
      */
-    public static function make(): DatabaseDriverInterface
+    public static function make(?string $connectionName = null): DatabaseDriverInterface
     {
-        $connection = config('database.default');
-        $driver = DB::connection($connection)->getDriverName();
+        $driver = DB::connection($connectionName)->getDriverName();
 
         return match ($driver) {
-            'mysql' => new Driver\MysqlDatabase(),
-            'pgsql' => new Driver\PostgreSQLDatabase(),
-            'sqlsrv' => new Driver\SQLServerDatabase(),
+            'mysql' => new Driver\MysqlDatabase($connectionName),
+            'pgsql' => new Driver\PostgreSQLDatabase($connectionName),
+            'sqlsrv' => new Driver\SQLServerDatabase($connectionName),
             default => throw new Exception("Unsupported database driver: $driver"),
         };
     }
