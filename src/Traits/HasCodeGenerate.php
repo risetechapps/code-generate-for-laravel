@@ -15,15 +15,19 @@ trait HasCodeGenerate
         static::creating(/**
          * @throws \Exception
          */ function ($model) {
-            if (Schema::hasTable($model->getTable())) {
+            $connection = $model->getConnectionName();
+            $schemaBuilder = Schema::connection($connection ?? config('database.default'));
+
+            if ($schemaBuilder->hasTable($model->getTable())) {
                 $model->code = CodeGenerate::generate($model);
             }
 
         });
 
         static::updating(function ($model) {
-            if(!self::$ignoreCodeGenerateUpdating)
+            if (!self::$ignoreCodeGenerateUpdating) {
                 $model->code = $model->getOriginal('code');
+            }
         });
     }
 }
